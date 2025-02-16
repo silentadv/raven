@@ -6,3 +6,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id             String   @id @default(cuid())
+  discord_id     String   @unique
+  character_name String
+  level          Int      @default(1)
+  experience     Int      @default(0)
+  experience_cap Int      @default(1000)
+  gold           Int      @default(0)
+  created_at     DateTime @default(now())
+
+  @@map("users")
+}
