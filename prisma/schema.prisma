@@ -27,6 +27,12 @@ model Character {
   level  Int    @default(1)
   xp     Int    @default(0)
   xp_cap Int    @default(1000)
+  points Int    @default(10)
+
+  strength   Int @default(1)
+  agility    Int @default(1)
+  magic      Int @default(1)
+  resistance Int @default(1)
 
   created_at DateTime @default(now())
 

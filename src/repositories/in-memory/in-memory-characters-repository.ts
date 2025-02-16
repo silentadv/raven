@@ -33,6 +33,11 @@ export class InMemoryCharactersRepository implements CharactersRepository {
       level: data.level ?? 1,
       xp: data.xp ?? 0,
       xp_cap: data.xp_cap ?? 1000,
+      points: data.points ?? 10,
+      strength: data.strength ?? 1,
+      magic: data.magic ?? 1,
+      agility: data.agility ?? 1,
+      resistance: data.resistance ?? 1,
       created_at: new Date(),
     } satisfies Character;
 
