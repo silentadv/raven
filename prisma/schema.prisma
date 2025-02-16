@@ -30,8 +30,21 @@ model Character {
 
   created_at DateTime @default(now())
 
-  user User @relation(fields: [user_id], references: [id])
+  user  User  @relation(fields: [user_id], references: [id])
+  Guild Guild @relation(fields: [guild_id], references: [id])
 
   @@unique([user_id, guild_id])
   @@map("characters")
+}
+
+model Guild {
+  id         String @id @default(cuid())
+  discord_id String @unique
+  name       String
+
+  characters Character[]
+
+  created_at DateTime @default(now())
+
+  @@map("guilds")
 }
