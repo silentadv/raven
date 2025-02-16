@@ -1,4 +1,4 @@
-import { makeCommand } from "@/lib/utils/factories/make-command";
+import { makeCommand } from "@/lib/factories/make-command";
 
 export default makeCommand({
   name: "ping",

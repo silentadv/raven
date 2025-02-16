@@ -2,7 +2,7 @@ import { EventOptions } from "@/@types/event";
 import { Client } from "discord.js";
 import glob from "tiny-glob";
 
-export async function eventHandler(client: Client) {
+export async function handleEvents(client: Client) {
   const files = await glob("src/client/events/**/*.ts");
 
   for (const file of files) {

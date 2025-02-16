@@ -2,7 +2,7 @@ import { CommandOptions } from "@/@types/command";
 import { Client } from "discord.js";
 import glob from "tiny-glob";
 
-export async function commandHandler(client: Client) {
+export async function handleCommands(client: Client) {
   const files = await glob("src/client/commands/**/*.ts");
 
   for (const file of files) {

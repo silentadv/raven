@@ -1,4 +1,4 @@
-import { makeEvent } from "@/lib/utils/factories/make-event";
+import { makeEvent } from "@/lib/factories/make-event";
 
 export default makeEvent({
   name: "ready",

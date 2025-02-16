@@ -1,5 +1,5 @@
 import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-case";
-import { makeCommand } from "@/lib/utils/factories/make-command";
+import { makeCommand } from "@/lib/factories/make-command";
 import { joinText } from "@/lib/utils/join-text";
 
 export default makeCommand({
