@@ -22,7 +22,7 @@ describe("Create Character Use Case", () => {
 
     const { character } = await sut.handle({
       userDiscordId: "user-01",
-      characterServerId: "server-01",
+      characterGuildId: "guild-01",
       characterName: "John Doe",
     });
 
@@ -33,7 +33,7 @@ describe("Create Character Use Case", () => {
     await expect(() =>
       sut.handle({
         userDiscordId: "invalid-id",
-        characterServerId: "server-01",
+        characterGuildId: "guild-01",
         characterName: "John Doe",
       })
     ).rejects.toBeInstanceOf(ResourceNotFoundError);

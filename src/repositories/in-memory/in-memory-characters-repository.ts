@@ -8,7 +8,7 @@ export class InMemoryCharactersRepository implements CharactersRepository {
   public async create(data: Prisma.CharacterUncheckedCreateInput) {
     const character = {
       id: data.id ?? randomUUID(),
-      server_id: data.server_id,
+      guild_id: data.guild_id,
       user_id: data.user_id,
       name: data.name,
       level: data.level ?? 1,

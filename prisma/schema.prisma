@@ -19,9 +19,9 @@ model User {
 }
 
 model Character {
-  id        String @id @default(cuid())
-  user_id   String
-  server_id String
+  id       String @id @default(cuid())
+  user_id  String
+  guild_id String
 
   name   String
   level  Int    @default(1)
@@ -32,6 +32,6 @@ model Character {
 
   user User @relation(fields: [user_id], references: [id])
 
-  @@unique([user_id, server_id])
+  @@unique([user_id, guild_id])
   @@map("characters")
 }

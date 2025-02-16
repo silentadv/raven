@@ -5,7 +5,7 @@ import { ResourceNotFoundError } from "../errors/ResourceNotFoundError";
 
 interface CreateCharacterUseCaseRequest {
   userDiscordId: string;
-  characterServerId: string;
+  characterGuildId: string;
   characterName: string;
 }
 interface CreateCharacterUseCaseResponse {
@@ -20,7 +20,7 @@ export class CreateCharacterUseCase {
 
   public async handle({
     userDiscordId,
-    characterServerId,
+    characterGuildId,
     characterName,
   }: CreateCharacterUseCaseRequest): Promise<CreateCharacterUseCaseResponse> {
     const user = await this.usersRepository.findByDiscordId(userDiscordId);
@@ -28,7 +28,7 @@ export class CreateCharacterUseCase {
 
     const character = await this.charactersRepository.create({
       user_id: user.id,
-      server_id: characterServerId,
+      guild_id: characterGuildId,
       name: characterName,
     });
 
