@@ -1,6 +1,6 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { User } from "@prisma/client";
-import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
+import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
 
 interface RegisterUseCaseRequest {
   userDiscordId: string;

@@ -1,7 +1,7 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { Character } from "@prisma/client";
 import { CharactersRepository } from "@/repositories/characters-repository";
-import { ResourceNotFoundError } from "../errors/ResourceNotFoundError";
+import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 
 interface FetchUserCharactersUseCaseRequest {
   userDiscordId: string;

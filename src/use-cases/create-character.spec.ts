@@ -2,7 +2,7 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 import { describe, it, beforeEach, expect } from "vitest";
 import { InMemoryCharactersRepository } from "@/repositories/in-memory/in-memory-characters-repository";
 import { CreateCharacterUseCase } from "./create-character";
-import { ResourceNotFoundError } from "../errors/ResourceNotFoundError";
+import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 import { InMemoryGuildsRepository } from "@/repositories/in-memory/in-memory-guilds-repository";
 
 let usersRepository: InMemoryUsersRepository;

@@ -1,7 +1,7 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { Character } from "@prisma/client";
 import { CharactersRepository } from "@/repositories/characters-repository";
-import { ResourceNotFoundError } from "../errors/ResourceNotFoundError";
+import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 import { GuildsRepository } from "@/repositories/guilds-repository";
 
 const MAX_USER_CHARACTER_COUNT = 5;
