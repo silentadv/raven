@@ -28,10 +28,13 @@ export default makeEvent({
 
     if (command) {
       try {
+        let parsedArgs = args;
+
+        if (command.parse) parsedArgs = command.parse(args);
         return await command.handle({
           client,
           message,
-          args,
+          args: parsedArgs,
         });
       } catch (error) {
         if (error instanceof ResourceNotFoundError && error.resource === "user")
