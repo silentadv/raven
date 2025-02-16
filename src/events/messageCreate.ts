@@ -12,7 +12,7 @@ export default makeEvent({
       return message.reply(
         joinText(
           `> ℹ️ | Olá ${message.author}, meu prefixo neste servidor é **${BOT_PREFIX}**.`,
-          `> -# Utilize ${BOT_PREFIX}help para ver meus comandos.`
+          `> -# Utilize **${BOT_PREFIX}help** para ver meus **comandos**.`
         )
       );
 
@@ -38,7 +38,7 @@ export default makeEvent({
           return message.reply(
             joinText(
               `> ❌ | ${message.author}, **não** encontrei seu **registro** em meu **banco de dados**.`,
-              `> -# Utilize **r.register** para se **registrar** em meu **banco de dados**.`
+              `> -# Utilize **${BOT_PREFIX}register** para se **registrar** em meu **banco de dados**.`
             )
           );
 
