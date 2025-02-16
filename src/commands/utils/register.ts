@@ -27,7 +27,7 @@ export default makeCommand({
     }
 
     await loadingMessage.edit(
-      `> ✅ | ${message.author}, você foi **registrado** com **sucesso**!`
+      `> ✅ | ${message.author}, você foi **registrado** com **sucesso** no meu **banco de dados**!`
     );
   },
 });

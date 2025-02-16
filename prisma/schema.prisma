@@ -23,7 +23,7 @@ model Character {
   user_id  String
   guild_id String
 
-  name   String
+  name   String @db.VarChar(25)
   level  Int    @default(1)
   xp     Int    @default(0)
   xp_cap Int    @default(1000)

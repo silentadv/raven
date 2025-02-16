@@ -4,7 +4,7 @@ import { makeCommand } from "@/utils/factories/make-command";
 import { joinText } from "@/utils/join-text";
 
 const parse = (args: string[]) => {
-  const name = args[0];
+  const name = args.join(" ");
 
   if (!name)
     throw new Error(
@@ -12,7 +12,7 @@ const parse = (args: string[]) => {
     );
 
   return {
-    name,
+    name: name.slice(0, 25),
   };
 };
 
@@ -23,7 +23,7 @@ export default makeCommand({
   async handle({ message, args: { name } }) {
     const createCharacterUseCase = makeCreateCharacterUseCase();
 
-    const { character } = await createCharacterUseCase.handle({
+    await createCharacterUseCase.handle({
       userDiscordId: message.author.id,
       characterGuildDiscordId: message.guild.id,
       characterName: name,
@@ -34,8 +34,8 @@ export default makeCommand({
 
     return message.reply(
       joinText(
-        `> ✅ | ${message.author}, você **criou** com sucesso o **personagem** \`${name}\` na **guilda** \`${guild.name}\`.`,
-        `>  Você recebeu **10** pontos de atributo iniciais para distribuir no seu personagem.`,
+        `> ✅ | ${message.author}, você **criou** com **sucesso** o **personagem** \`${name}\`, agora ele faz parte da **guilda** \`${guild.name}\`.`,
+        `> - Você recebeu **10** pontos de atributo iniciais para distribuir no seu personagem.`,
         `> -# Utilize **r.profile** para ver o **perfil** do seu **personagem**.`
       )
     );
