@@ -1,3 +1,4 @@
+import { icons } from "@/lib/emojis";
 import { makeCommand } from "@/lib/factories/make-command";
 
 export default makeCommand({
@@ -6,7 +7,7 @@ export default makeCommand({
   aliases: ["pong", "latency", "latência"],
   handle({ client, message }) {
     return message.reply(
-      `> Pong! ${message.author}, minha latência atual é de **${client.ws.ping}ms**.`
+      `> ${icons.static.connection} | Pong! ${message.author}, minha latência atual é de **${client.ws.ping}ms**.`
     );
   },
 });

@@ -2,6 +2,7 @@ import { PrismaGuildsRepository } from "@/repositories/prisma/prisma-guilds-repo
 import { makeCreateCharacterUseCase } from "@/use-cases/factories/make-create-character-use-case";
 import { makeCommand } from "@/lib/factories/make-command";
 import { joinText } from "@/lib/utils/join-text";
+import { icons } from "@/lib/emojis";
 
 const parse = (args: string[]) => {
   const name = args.join(" ");
@@ -34,7 +35,7 @@ export default makeCommand({
 
     return message.reply(
       joinText(
-        `> ✅ | ${message.author}, você **criou** com **sucesso** o **personagem** \`${name}\`, agora ele faz parte da **guilda** \`${guild.name}\`.`,
+        `> ${icons.static.success} | ${message.author}, você **criou** com **sucesso** o **personagem** \`${name}\`, agora ele faz parte da **guilda** \`${guild.name}\`.`,
         `> - Você recebeu **10** pontos de atributo iniciais para distribuir no seu personagem.`,
         `> -# Utilize **r.profile** para ver o **perfil** do seu **personagem**.`
       )

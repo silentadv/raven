@@ -1,3 +1,4 @@
+import { icons } from "@/lib/emojis";
 import { makeEvent } from "@/lib/factories/make-event";
 import { parseInteractionId } from "@/lib/utils/parse-interaction-id";
 
@@ -13,7 +14,7 @@ export default makeEvent({
     const component = client.components.get(name);
     if (!component)
       return interaction.reply({
-        content: `> ❌ | ${interaction.user}, **ocorreu um erro** nesta **interação** tente novamente **mais tarde**.`,
+        content: `> ${icons.static.danger} | ${interaction.user}, **ocorreu um erro** nesta **interação** tente novamente **mais tarde**.`,
         flags: ["Ephemeral"],
       });
 
@@ -23,6 +24,12 @@ export default makeEvent({
 
     const args = component.schema.safeParse(rawArgs);
     if (!args.success) return console.error(rawArgs, args.error);
+
+    if (args.data?.userId && interaction.user.id !== args.data.userId)
+      return interaction.reply({
+        content: `> ${icons.static.danger} | ${interaction.user}, **ocorreu um erro** esta **interação** não é pra **você**.`,
+        flags: ["Ephemeral"],
+      });
 
     return component.execute({
       args: args.data!,

@@ -1,6 +1,7 @@
 import { ResourceNotFoundError } from "@/use-cases/errors/ResourceNotFoundError";
 import { makeEvent } from "@/lib/factories/make-event";
 import { joinText } from "@/lib/utils/join-text";
+import { icons } from "@/lib/emojis";
 
 const BOT_PREFIX = "r.";
 
@@ -11,7 +12,7 @@ export default makeEvent({
     if (message.content === `${client.user}`)
       return message.reply(
         joinText(
-          `> ℹ️ | Olá ${message.author}, meu prefixo neste servidor é **${BOT_PREFIX}**.`,
+          `> ${icons.static.info} | Olá! ${message.author}, meu prefixo neste servidor é **${BOT_PREFIX}**`,
           `> -# Utilize **${BOT_PREFIX}help** para ver meus **comandos**.`
         )
       );
@@ -40,15 +41,26 @@ export default makeEvent({
         if (error instanceof ResourceNotFoundError && error.resource === "user")
           return message.reply(
             joinText(
-              `> ❌ | ${message.author}, **não** encontrei seu **registro** em meu **banco de dados**.`,
+              `> ${icons.static.danger} | ${message.author}, **não** encontrei seu **registro** em meu **banco de dados**.`,
               `> -# Utilize **${BOT_PREFIX}register** para se **registrar** em meu **banco de dados**.`
+            )
+          );
+
+        if (
+          error instanceof ResourceNotFoundError &&
+          error.resource === "character"
+        )
+          return message.reply(
+            joinText(
+              `> ${icons.static.danger} | ${message.author}, **não** encontrei um **personagem** seu em meu **banco de dados**.`,
+              `> -# Utilize **${BOT_PREFIX}start** para **criar** um **personagem**.`
             )
           );
 
         if (error instanceof Error)
           return message.reply(
             joinText(
-              `> ❌ | ${message.author}, ocorreu um erro ao executar este comando:`,
+              `> ${icons.static.danger} | ${message.author}, ocorreu um erro ao executar este comando:`,
               `> -# ${error.message}`
             )
           );

@@ -5,9 +5,14 @@ import { randomUUID } from "node:crypto";
 export class InMemoryGuildsRepository implements GuildsRepository {
   public items: Guild[] = [];
 
+  public async findById(id: string) {
+    const guild = this.items.find((item) => item.id == id);
+    return guild || null;
+  }
+
   public async findByDiscordId(id: string) {
-    const user = this.items.find((item) => item.discord_id == id);
-    return user || null;
+    const guild = this.items.find((item) => item.discord_id == id);
+    return guild || null;
   }
 
   public async create(data: Prisma.GuildUncheckedCreateInput) {
