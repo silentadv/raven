@@ -1,6 +1,7 @@
 import { describe, it, beforeEach, expect } from "vitest";
 import { InMemoryGuildsRepository } from "@/repositories/in-memory/in-memory-guilds-repository";
 import { CreateGuildUseCase } from "./create-guild";
+import { GuildAlreadyExistsError } from "./errors/GuildAlreadyExistsError";
 
 let guildsRepository: InMemoryGuildsRepository;
 let sut: CreateGuildUseCase;
@@ -31,6 +32,6 @@ describe("Create Guild Use Case", () => {
         guildDiscordId: "guild-01",
         guildName: "Typescript Guild 2",
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(GuildAlreadyExistsError);
   });
 });

@@ -1,5 +1,6 @@
 import { Guild, User } from "@prisma/client";
 import { GuildsRepository } from "@/repositories/guilds-repository";
+import { GuildAlreadyExistsError } from "./errors/GuildAlreadyExistsError";
 
 interface CreateGuildUseCaseRequest {
   guildDiscordId: string;
@@ -20,7 +21,7 @@ export class CreateGuildUseCase {
       guildDiscordId
     );
 
-    if (guildWithSameDiscordId) throw new Error();
+    if (guildWithSameDiscordId) throw new GuildAlreadyExistsError();
 
     const guild = await this.guildsRepository.create({
       discord_id: guildDiscordId,
