@@ -3,6 +3,7 @@ import { Character } from "@prisma/client";
 import { CharactersRepository } from "@/repositories/characters-repository";
 import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 import { GuildsRepository } from "@/repositories/guilds-repository";
+import { MaxUserCharacterCountError } from "./errors/MaxUserCharacterCountError";
 
 const MAX_USER_CHARACTER_COUNT = 5;
 
@@ -28,20 +29,22 @@ export class CreateCharacterUseCase {
     characterName,
   }: CreateCharacterUseCaseRequest): Promise<CreateCharacterUseCaseResponse> {
     const user = await this.usersRepository.findByDiscordId(userDiscordId);
-    if (!user) throw new ResourceNotFoundError("discord user");
+    if (!user) throw new ResourceNotFoundError("user");
 
     const userCharacterCount =
       await this.charactersRepository.countCharactersByUserId(user.id);
-    if (userCharacterCount >= MAX_USER_CHARACTER_COUNT) throw new Error();
+    if (userCharacterCount >= MAX_USER_CHARACTER_COUNT)
+      throw new MaxUserCharacterCountError("user");
 
     const guild = await this.guildsRepository.findByDiscordId(
       characterGuildDiscordId
     );
-    if (!guild) throw new ResourceNotFoundError("discord guild");
+    if (!guild) throw new ResourceNotFoundError("guild");
 
     const userAlreadyHasOneCharacterInThisGuild =
       await this.charactersRepository.findByGuildAndUserId(user.id, guild.id);
-    if (userAlreadyHasOneCharacterInThisGuild) throw new Error();
+    if (userAlreadyHasOneCharacterInThisGuild)
+      throw new MaxUserCharacterCountError("guild");
 
     const character = await this.charactersRepository.create({
       user_id: user.id,

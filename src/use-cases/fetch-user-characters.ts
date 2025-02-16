@@ -20,7 +20,7 @@ export class FetchUserCharactersUseCase {
     userDiscordId,
   }: FetchUserCharactersUseCaseRequest): Promise<FetchUserCharactersUseCaseResponse> {
     const user = await this.usersRepository.findByDiscordId(userDiscordId);
-    if (!user) throw new ResourceNotFoundError("discord user");
+    if (!user) throw new ResourceNotFoundError("user");
 
     const characters = await this.charactersRepository.findManyByUserId(
       user.id

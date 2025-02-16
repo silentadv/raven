@@ -12,6 +12,11 @@ export class InMemoryCharactersRepository implements CharactersRepository {
     return characterCount;
   }
 
+  public async findById(id: string) {
+    const character = this.items.find((item) => item.id === id);
+    return character || null;
+  }
+
   public async findByGuildAndUserId(userId: string, guildId: string) {
     const character = this.items.find(
       (item) => item.user_id === userId && item.guild_id === guildId
@@ -22,6 +27,16 @@ export class InMemoryCharactersRepository implements CharactersRepository {
   public async findManyByUserId(id: string) {
     const characters = this.items.filter((item) => item.user_id == id);
     return characters;
+  }
+
+  public async save(character: Character) {
+    const characterIndex = this.items.findIndex(
+      (item) => item.id == character.id
+    );
+
+    if (characterIndex) this.items[characterIndex] = character;
+
+    return character;
   }
 
   public async create(data: Prisma.CharacterUncheckedCreateInput) {

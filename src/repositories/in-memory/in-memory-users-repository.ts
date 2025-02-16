@@ -12,7 +12,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   public async create(data: Prisma.UserCreateInput) {
     const user = {
-      id: randomUUID(),
+      id: data.id ?? randomUUID(),
       discord_id: data.discord_id,
       created_at: new Date(),
     } satisfies User;

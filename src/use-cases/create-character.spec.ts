@@ -4,6 +4,7 @@ import { InMemoryCharactersRepository } from "@/repositories/in-memory/in-memory
 import { CreateCharacterUseCase } from "./create-character";
 import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 import { InMemoryGuildsRepository } from "@/repositories/in-memory/in-memory-guilds-repository";
+import { MaxUserCharacterCountError } from "./errors/MaxUserCharacterCountError";
 
 let usersRepository: InMemoryUsersRepository;
 let charactersRepository: InMemoryCharactersRepository;
@@ -87,7 +88,7 @@ describe("Create Character Use Case", () => {
         characterGuildDiscordId: "guild-01",
         userDiscordId: "user-01",
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(MaxUserCharacterCountError);
   });
 
   it("should not be able to create more than five characters per user.", async () => {
@@ -114,6 +115,6 @@ describe("Create Character Use Case", () => {
         characterGuildDiscordId: `guild-6`,
         userDiscordId: "user-01",
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(MaxUserCharacterCountError);
   });
 });

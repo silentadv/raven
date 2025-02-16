@@ -8,12 +8,14 @@ Raven is a rpg discord bot
 - [x] Users should be able to create an character for a specific discord guild.
 - [x] Users should be able to retrieve their character list.
 - [ ] Users should be able to retrieve a character profile.
+- [x] Users should be able to allocate attribute points to their character.
 
 ## Rules (RNs)
 
 - [x] It should not be possible to register with same discord user id.
 - [x] It should not be possible to register more than one character per discord guild.
 - [x] It should not be possible to register more than five characters per account.
+- [x] It should not be able to allocate negative amount or zero character points.
 
 ## Non-Functional Requirements (RNFs)
 
@@ -21,5 +23,5 @@ Raven is a rpg discord bot
 
 ## To-dos
 
-- [ ] Create all custom errors.
-- [ ] Create character use attribute points use-case.
+- [x] Create all custom errors.
+- [x] Create character use attribute points use-case.
