@@ -22,3 +22,4 @@ Raven is a rpg discord bot
 ## To-dos
 
 - [ ] Create all custom errors.
+- [ ] Create character use attribute points use-case.
