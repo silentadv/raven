@@ -2,21 +2,19 @@ import { UsersRepository } from "@/repositories/users-repository";
 import { User } from "@prisma/client";
 import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
 
-interface CreateUserUseCaseRequest {
+interface RegisterUseCaseRequest {
   userDiscordId: string;
-  userCharacterName: string;
 }
-interface CreateUserUseCaseResponse {
+interface RegisterUseCaseResponse {
   user: User;
 }
 
-export class CreateUserUseCase {
+export class RegisterUseCase {
   public constructor(private usersRepository: UsersRepository) {}
 
   public async handle({
     userDiscordId,
-    userCharacterName,
-  }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
+  }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
     const userWithSameDiscordId = await this.usersRepository.findByDiscordId(
       userDiscordId
     );
@@ -25,7 +23,6 @@ export class CreateUserUseCase {
 
     const user = await this.usersRepository.create({
       discord_id: userDiscordId,
-      character_name: userCharacterName,
     });
 
     return { user };

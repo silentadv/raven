@@ -1,36 +1,33 @@
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { CreateUserUseCase } from "./create-user-use-case";
+import { RegisterUseCase } from "./register";
 import { describe, it, beforeEach, expect } from "vitest";
 import { UserAlreadyExistsError } from "../errors/UserAlreadyExistsError";
 
 let usersRepository: InMemoryUsersRepository;
-let sut: CreateUserUseCase;
+let sut: RegisterUseCase;
 
-describe("Create User Use Case", () => {
+describe("Register Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
-    sut = new CreateUserUseCase(usersRepository);
+    sut = new RegisterUseCase(usersRepository);
   });
 
-  it("should be able to create an user.", async () => {
+  it("should be able to register an user.", async () => {
     const { user } = await sut.handle({
       userDiscordId: "user-01",
-      userCharacterName: "John Doe",
     });
 
     expect(user.id).toEqual(expect.any(String));
   });
 
-  it("should not be able to create an user with same discord id.", async () => {
-    const { user } = await sut.handle({
+  it("should not be able to register an user with same discord id.", async () => {
+    await sut.handle({
       userDiscordId: "user-01",
-      userCharacterName: "John Doe",
     });
 
     await expect(() =>
       sut.handle({
         userDiscordId: "user-01",
-        userCharacterName: "John Doe",
       })
     ).rejects.toBeInstanceOf(UserAlreadyExistsError);
   });

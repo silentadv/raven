@@ -14,11 +14,6 @@ export class InMemoryUsersRepository implements UsersRepository {
     const user = {
       id: randomUUID(),
       discord_id: data.discord_id,
-      character_name: data.character_name,
-      experience: 0,
-      experience_cap: 1000,
-      gold: 0,
-      level: 1,
       created_at: new Date(),
     } satisfies User;
 

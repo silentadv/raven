@@ -8,14 +8,30 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(cuid())
-  discord_id     String   @unique
-  character_name String
-  level          Int      @default(1)
-  experience     Int      @default(0)
-  experience_cap Int      @default(1000)
-  gold           Int      @default(0)
-  created_at     DateTime @default(now())
+  id         String @id @default(cuid())
+  discord_id String @unique
+
+  characters Character[]
+
+  created_at DateTime @default(now())
 
   @@map("users")
+}
+
+model Character {
+  id        String @id @default(cuid())
+  user_id   String
+  server_id String
+
+  name   String
+  level  Int    @default(1)
+  xp     Int    @default(0)
+  xp_cap Int    @default(1000)
+
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, server_id])
+  @@map("characters")
 }
