@@ -16,12 +16,14 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^22.13.4",
+    "prisma": "^6.3.1",
     "tsup": "^8.3.6",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
   },
   "dependencies": {
+    "@prisma/client": "^6.3.1",
     "discord.js": "^14.18.0",
     "tiny-glob": "^0.2.9",
     "zod": "^3.24.2"
