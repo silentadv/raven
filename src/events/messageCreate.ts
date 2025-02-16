@@ -1,3 +1,4 @@
+import { ResourceNotFoundError } from "@/use-cases/errors/ResourceNotFoundError";
 import { makeEvent } from "@/utils/factories/make-event";
 import { joinText } from "@/utils/join-text";
 
@@ -10,7 +11,7 @@ export default makeEvent({
     if (message.content === `${client.user}`)
       return message.reply(
         joinText(
-          `> Olá ${message.author}, meu prefixo neste servidor é **${BOT_PREFIX}**.`,
+          `> ℹ️ | Olá ${message.author}, meu prefixo neste servidor é **${BOT_PREFIX}**.`,
           `> -# Utilize ${BOT_PREFIX}help para ver meus comandos.`
         )
       );
@@ -25,11 +26,30 @@ export default makeEvent({
       client.commands.get(commandName) ||
       client.commands.find((command) => command.aliases.includes(commandName));
 
-    if (command)
-      return await command.handle({
-        client,
-        message,
-        args,
-      });
+    if (command) {
+      try {
+        return await command.handle({
+          client,
+          message,
+          args,
+        });
+      } catch (error) {
+        if (error instanceof ResourceNotFoundError && error.resource === "user")
+          return message.reply(
+            joinText(
+              `> ❌ | ${message.author}, **não** encontrei seu **registro** em meu **banco de dados**.`,
+              `> -# Utilize **r.register** para se **registrar** em meu **banco de dados**.`
+            )
+          );
+
+        if (error instanceof Error)
+          return message.reply(
+            joinText(
+              `> ❌ | ${message.author}, ocorreu um erro ao executar este comando:`,
+              `> -# ${error.message}`
+            )
+          );
+      }
+    }
   },
 });
