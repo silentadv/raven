@@ -1,6 +1,6 @@
 import { ResourceNotFoundError } from "@/use-cases/errors/ResourceNotFoundError";
-import { makeEvent } from "@/utils/factories/make-event";
-import { joinText } from "@/utils/join-text";
+import { makeEvent } from "@/lib/utils/factories/make-event";
+import { joinText } from "@/lib/utils/join-text";
 
 const BOT_PREFIX = "r.";
 

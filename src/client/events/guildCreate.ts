@@ -1,5 +1,5 @@
 import { makeCreateGuildUseCase } from "@/use-cases/factories/make-create-guild-use-case";
-import { makeEvent } from "@/utils/factories/make-event";
+import { makeEvent } from "@/lib/utils/factories/make-event";
 
 export default makeEvent({
   name: "guildCreate",

@@ -1,7 +1,7 @@
 import { PrismaGuildsRepository } from "@/repositories/prisma/prisma-guilds-repository";
 import { makeCreateCharacterUseCase } from "@/use-cases/factories/make-create-character-use-case";
-import { makeCommand } from "@/utils/factories/make-command";
-import { joinText } from "@/utils/join-text";
+import { makeCommand } from "@/lib/utils/factories/make-command";
+import { joinText } from "@/lib/utils/join-text";
 
 const parse = (args: string[]) => {
   const name = args.join(" ");
