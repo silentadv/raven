@@ -7,7 +7,7 @@ Raven is a rpg discord bot
 - [x] Users should be able to register an account.
 - [x] Users should be able to create an character for a specific discord guild.
 - [x] Users should be able to retrieve their character list.
-- [ ] Users should be able to retrieve a character profile.
+- [x] Users should be able to retrieve a guild character profile.
 - [x] Users should be able to allocate attribute points to their character.
 - [x] It should be able to create an guild.
 - [ ] Users should be able to retrieve guild profile.
