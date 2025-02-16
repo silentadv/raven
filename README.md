@@ -2,8 +2,15 @@
 
 Raven is a rpg discord bot
 
-# RFs
+# Functional Requirements (RFs)
 
-# RNFs
+- [ ] Users should be able to register an account.
+- [ ] Users should be able to retrieve their profile.
 
-# RN
+# Rules (RNs)
+
+- [ ] Should not be possible to register with same discord user id.
+
+# Non-Functional Requirements (RNFs)
+
+- [ ] The application data must be persisted in a PostgreSQL database.
