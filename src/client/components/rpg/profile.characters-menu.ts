@@ -46,8 +46,7 @@ export default makeComponent({
       )
       .setEmoji(icons.static.pencil.id)
       .setLabel("| Editar Personagem")
-      .setStyle(ButtonStyle.Primary)
-      .setDisabled(true);
+      .setStyle(ButtonStyle.Primary);
 
     const allocateCharacterPointsButton = new ButtonBuilder()
       .setCustomId(
@@ -56,11 +55,19 @@ export default makeComponent({
       .setEmoji(icons.static.points.id)
       .setLabel("| Utilizar Pontos")
       .setStyle(ButtonStyle.Secondary)
-      .setDisabled(true);
+      .setDisabled(currentCharacterProfile.points <= 0);
+
+    const reloadProfileButton = new ButtonBuilder()
+      .setCustomId(
+        `reload-character/:${interaction.user.id}/:${currentCharacterProfile.id}`
+      )
+      .setEmoji(icons.static.reload.id)
+      .setStyle(ButtonStyle.Primary);
 
     const actionsRow = new ActionRowBuilder<ButtonBuilder>().setComponents(
       editCharacterButton,
-      allocateCharacterPointsButton
+      allocateCharacterPointsButton,
+      reloadProfileButton
     );
 
     const row = new ActionRowBuilder<typeof menu>().setComponents(menu);

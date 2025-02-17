@@ -38,6 +38,8 @@ export default makeEvent({
           args: parsedArgs,
         });
       } catch (error) {
+        console.error(error);
+
         if (error instanceof ResourceNotFoundError && error.resource === "user")
           return message.reply(
             joinText(
@@ -61,7 +63,7 @@ export default makeEvent({
           return message.reply(
             joinText(
               `> ${icons.static.danger} | ${message.author}, ocorreu um erro ao executar este comando:`,
-              `> -# ${error.message}`
+              `> -# Erro: ${error.message}`
             )
           );
       }

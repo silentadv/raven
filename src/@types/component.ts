@@ -1,4 +1,8 @@
-import { ButtonInteraction, StringSelectMenuInteraction } from "discord.js";
+import {
+  ButtonInteraction,
+  ModalSubmitInteraction,
+  StringSelectMenuInteraction,
+} from "discord.js";
 import { z, ZodObject, ZodTypeAny } from "zod";
 
 export type ComponentArgs<T extends string> = T extends `${infer A}/${infer B}`
@@ -14,11 +18,13 @@ export type MergeArgs<T, U> = T & U;
 export enum ComponentType {
   StringSelectMenu,
   Button,
+  Modal,
 }
 
 export interface ComponentInteractionType {
   [ComponentType.StringSelectMenu]: StringSelectMenuInteraction;
   [ComponentType.Button]: ButtonInteraction;
+  [ComponentType.Modal]: ModalSubmitInteraction;
 }
 
 export interface ComponentRunner<

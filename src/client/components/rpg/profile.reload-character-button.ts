@@ -1,33 +1,36 @@
+import { ComponentType } from "@/@types/component";
 import { createUserCharactersMenu } from "@/lib/components/user-characters-menu";
 import { icons } from "@/lib/emojis";
-import { makeCommand } from "@/lib/factories/make-command";
+import { makeComponent } from "@/lib/factories/make-component";
 import { joinText } from "@/lib/utils/join-text";
 import { PrismaGuildsRepository } from "@/repositories/prisma/prisma-guilds-repository";
 import { ResourceNotFoundError } from "@/use-cases/errors/ResourceNotFoundError";
 import { makeFetchUserCharactersUseCase } from "@/use-cases/factories/make-fetch-user-characters-use-case";
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { z } from "zod";
 
-export default makeCommand({
-  name: "profile",
-  category: "rpg",
-  aliases: ["perfil"],
-  async handle({ message }) {
+export default makeComponent({
+  id: "reload-character/:userId/:characterId",
+  name: "reload-character",
+  types: [ComponentType.Button],
+  schema: z.object({
+    userId: z.coerce.string(),
+    characterId: z.coerce.string(),
+  }),
+  async execute({ interaction, args }) {
     const fetchUserCharactersUseCase = makeFetchUserCharactersUseCase();
     const { characters } = await fetchUserCharactersUseCase.handle({
-      userDiscordId: message.author.id,
+      userDiscordId: args.userId,
     });
 
     if (!characters.length) throw new ResourceNotFoundError("character");
 
-    const menu = await createUserCharactersMenu(message.author.id, characters);
+    const menu = await createUserCharactersMenu(args.userId, characters);
     const guildsRepository = new PrismaGuildsRepository();
-    const currentGuild = await guildsRepository.findByDiscordId(
-      message.guild.id
-    );
 
-    const currentCharacterProfile =
-      characters.find((character) => character.guild_id === currentGuild?.id) ||
-      characters.at(0)!;
+    const currentCharacterProfile = characters.find(
+      (character) => character.id === args.characterId
+    )!;
 
     const currentCharacterProfileGuild = (await guildsRepository.findById(
       currentCharacterProfile.guild_id
@@ -40,7 +43,7 @@ export default makeCommand({
 
     const editCharacterButton = new ButtonBuilder()
       .setCustomId(
-        `edit-character/:${message.author.id}/:${currentCharacterProfile.id}`
+        `edit-character/:${interaction.user.id}/:${currentCharacterProfile.id}`
       )
       .setEmoji(icons.static.pencil.id)
       .setLabel("| Editar Personagem")
@@ -48,7 +51,7 @@ export default makeCommand({
 
     const allocateCharacterPointsButton = new ButtonBuilder()
       .setCustomId(
-        `up-character/:${message.author.id}/:${currentCharacterProfile.id}`
+        `up-character/:${interaction.user.id}/:${currentCharacterProfile.id}`
       )
       .setEmoji(icons.static.points.id)
       .setLabel("| Utilizar Pontos")
@@ -57,7 +60,7 @@ export default makeCommand({
 
     const reloadProfileButton = new ButtonBuilder()
       .setCustomId(
-        `reload-character/:${message.author.id}/:${currentCharacterProfile.id}`
+        `reload-character/:${interaction.user.id}/:${currentCharacterProfile.id}`
       )
       .setEmoji(icons.static.reload.id)
       .setStyle(ButtonStyle.Primary);
@@ -68,10 +71,9 @@ export default makeCommand({
       reloadProfileButton
     );
 
-    const menuRow = new ActionRowBuilder<typeof menu>().setComponents(menu);
-
+    const row = new ActionRowBuilder<typeof menu>().setComponents(menu);
     const content = joinText(
-      `## [ ${icons.static.user} | ${message.author.username} ]`,
+      `## [ ${icons.static.user} | ${interaction.user.username} ]`,
       `> ${icons.static.info} **| Nome**: \`${currentCharacterProfile.name}\``,
       `> ${icons.static.guild} **| Guilda**: \`${currentCharacterProfileGuild.name}\``,
       `> ${icons.static.sparkles} **| Level**: \`${currentCharacterProfile.level}\``,
@@ -83,6 +85,6 @@ export default makeCommand({
       `> ${icons.static.shield} **| Resistência**: \`${currentCharacterProfile.resistance}\``
     );
 
-    message.reply({ content, components: [menuRow, actionsRow] });
+    interaction.update({ content, components: [row, actionsRow] });
   },
 });

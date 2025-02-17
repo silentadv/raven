@@ -6,7 +6,12 @@ export default makeEvent({
   name: "interactionCreate",
   handle(client, interaction) {
     if (!interaction.inGuild()) return;
-    if (!interaction.isButton() && !interaction.isStringSelectMenu()) return;
+    if (
+      !interaction.isButton() &&
+      !interaction.isStringSelectMenu() &&
+      !interaction.isModalSubmit()
+    )
+      return;
 
     const { name, args: argsValues } = parseInteractionId(interaction.customId);
     if (!name) return;
