@@ -1,6 +1,7 @@
 import { createProfileButtonsRow } from "@/lib/components/profile-buttons-row";
 import { createUserCharactersMenu } from "@/lib/components/user-characters-menu";
 import { icons } from "@/lib/emojis";
+import { calculateMaxHp } from "@/lib/utils/calculate-max-hp";
 import { joinText } from "@/lib/utils/join-text";
 import { GuildsRepository } from "@/repositories/guilds-repository";
 import { ResourceNotFoundError } from "@/use-cases/errors/ResourceNotFoundError";
@@ -56,10 +57,12 @@ export class GetProfileController {
 
     const menuRow = new ActionRowBuilder<typeof menu>().setComponents(menu);
 
+    const characterMaxHp = calculateMaxHp(currentCharacterProfile);
     const content = joinText(
       `## [ ${icons.static.user} | ${userUsername} ]`,
       `> ${icons.static.info} **| Nome**: \`${currentCharacterProfile.name}\``,
       `> ${icons.static.guild} **| Guilda**: \`${currentCharacterProfileGuild.name}\``,
+      `> ${icons.static.heart} **| Hp**: \`[${currentCharacterProfile.hp}/${characterMaxHp}]\``,
       `> ${icons.static.sparkles} **| Level**: \`${currentCharacterProfile.level}\``,
       `> ${icons.static.points} **| Pontos**: \`${currentCharacterProfile.points}\``,
       `## [ ${icons.static.pin} | Atributos ]`,

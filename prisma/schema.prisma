@@ -29,6 +29,7 @@ model Character {
   xp_cap Int    @default(1000)
   points Int    @default(10)
 
+  hp         Int @default(100)
   strength   Int @default(1)
   agility    Int @default(1)
   magic      Int @default(1)

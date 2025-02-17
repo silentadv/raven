@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "characters" ADD COLUMN     "hp" INTEGER NOT NULL DEFAULT 100;
