@@ -22,9 +22,9 @@ export enum ComponentType {
 }
 
 export interface ComponentInteractionType {
-  [ComponentType.StringSelectMenu]: StringSelectMenuInteraction;
-  [ComponentType.Button]: ButtonInteraction;
-  [ComponentType.Modal]: ModalSubmitInteraction;
+  [ComponentType.StringSelectMenu]: StringSelectMenuInteraction<"cached">;
+  [ComponentType.Button]: ButtonInteraction<"cached">;
+  [ComponentType.Modal]: ModalSubmitInteraction<"cached">;
 }
 
 export interface ComponentRunner<
