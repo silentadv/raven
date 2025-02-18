@@ -36,7 +36,7 @@ export default makeCommand({
     return message.reply(
       joinText(
         `> ${icons.static.success} | ${message.author}, você **criou** com **sucesso** o **personagem** \`${name}\`, agora ele faz parte da **guilda** \`${guild.name}\`.`,
-        `> - Você recebeu **10** pontos de atributo iniciais para distribuir no seu personagem.`,
+        `> - Você recebeu \`10\` **[ ${icons.static.points} | Pontos de Atributo ]** para utilizar no seu personagem.`,
         `> -# Utilize **r.profile** para ver o **perfil** do seu **personagem**.`
       )
     );

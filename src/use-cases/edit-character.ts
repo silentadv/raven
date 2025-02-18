@@ -1,5 +1,4 @@
 import { CharactersRepository } from "@/repositories/characters-repository";
-import { UsersRepository } from "@/repositories/users-repository";
 import { Character } from "@prisma/client";
 import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 

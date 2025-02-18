@@ -1,0 +1,20 @@
+{
+  "weapons": {
+    "wooden_sword": {
+      "id": "wooden_sword",
+      "name": "Espada de Madeira",
+      "rarity": "comum"
+    },
+    "stone_sword": {
+      "id": "stone_sword",
+      "name": "Espada de Pedra",
+      "rarity": "comum"
+    }
+  },
+  "currencies": {
+    "prisma": {
+      "id": "prisma",
+      "name": "Prisma"
+    }
+  }
+}

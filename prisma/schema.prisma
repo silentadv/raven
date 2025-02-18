@@ -37,8 +37,9 @@ model Character {
 
   created_at DateTime @default(now())
 
-  user  User  @relation(fields: [user_id], references: [id])
-  Guild Guild @relation(fields: [guild_id], references: [id])
+  user  User   @relation(fields: [user_id], references: [id])
+  Guild Guild  @relation(fields: [guild_id], references: [id])
+  Item  Item[]
 
   @@unique([user_id, guild_id])
   @@map("characters")
@@ -54,4 +55,15 @@ model Guild {
   created_at DateTime @default(now())
 
   @@map("guilds")
+}
+
+model Item {
+  id           String @id @default(cuid())
+  item_id      String
+  character_id String
+  count        Int    @default(0)
+
+  Character Character @relation(fields: [character_id], references: [id])
+
+  @@map("items")
 }
