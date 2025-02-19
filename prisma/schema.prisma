@@ -13,7 +13,8 @@ model User {
 
   characters Character[]
 
-  created_at DateTime @default(now())
+  created_at DateTime   @default(now())
+  cooldowns  Cooldown[]
 
   @@map("users")
 }
@@ -66,4 +67,20 @@ model Item {
   Character Character @relation(fields: [character_id], references: [id])
 
   @@map("items")
+}
+
+enum CooldownType {
+  DAILY
+}
+
+model Cooldown {
+  id      String       @id @default(cuid())
+  user_id String
+  type    CooldownType
+  date    DateTime
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@unique([type, user_id])
+  @@map("cooldowns")
 }

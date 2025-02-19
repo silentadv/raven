@@ -1,7 +1,6 @@
 import { icons } from "@/lib/emojis";
 import { makeCommand } from "@/lib/factories/make-command";
 import { joinText } from "@/lib/utils/join-text";
-import { ResourceNotFoundError } from "@/use-cases/errors/ResourceNotFoundError";
 import { makeCharacterInspectItemUseCase } from "@/use-cases/factories/make-character-inspect-item-use-case";
 import { makeGetGuildCharacterProfileUseCase } from "@/use-cases/factories/make-get-guild-character-profile-use-case";
 
@@ -20,18 +19,12 @@ export default makeCommand({
 
     const characterInspectItemUseCase = makeCharacterInspectItemUseCase();
 
-    let characterPrismasCount = 0;
-    try {
-      const { item } = await characterInspectItemUseCase.handle({
-        itemId: "prisma",
-        characterId: character.id,
-      });
+    const { item } = await characterInspectItemUseCase.handle({
+      itemId: "prisma",
+      characterId: character.id,
+    });
 
-      characterPrismasCount = item.count;
-    } catch (error) {
-      if (error instanceof ResourceNotFoundError && error.resource !== "item")
-        throw error;
-    }
+    const characterPrismasCount = item ? item.count : 0;
 
     return message.reply(
       joinText(

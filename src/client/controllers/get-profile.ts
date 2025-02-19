@@ -12,6 +12,7 @@ export interface GetProfileControllerRequest {
   userUsername: string;
   userDiscordId: string;
   userGuildDiscordId: string;
+  characterId?: string;
 }
 
 export interface GetProfileControllerResponse {
@@ -25,6 +26,7 @@ export class GetProfileController {
     userUsername,
     userDiscordId,
     userGuildDiscordId,
+    characterId,
   }: GetProfileControllerRequest): Promise<GetProfileControllerResponse> {
     const fetchUserCharactersUseCase = makeFetchUserCharactersUseCase();
     const { characters } = await fetchUserCharactersUseCase.handle({
@@ -38,6 +40,7 @@ export class GetProfileController {
     );
 
     const currentCharacterProfile =
+      characters.find((character) => character.id === characterId) ||
       characters.find((character) => character.guild_id === currentGuild?.id) ||
       characters.at(0)!;
 

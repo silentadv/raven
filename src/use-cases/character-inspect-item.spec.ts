@@ -36,26 +36,10 @@ describe("Character Obtain Item Use Case", () => {
       itemId: "item-01",
     });
 
-    expect(item.id).toEqual(expect.any(String));
+    expect(item!.id).toEqual(expect.any(String));
   });
 
   it("should not be able to inexistent character inspect an item .", async () => {
-    await expect(() =>
-      sut.handle({
-        characterId: "character-01",
-        itemId: "wooden_sword",
-      })
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
-  });
-
-  it("should not be able to obtain an inexistent item .", async () => {
-    await charactersRepository.create({
-      id: "character-01",
-      name: "John Doe",
-      user_id: "user-01",
-      guild_id: "guild-01",
-    });
-
     await expect(() =>
       sut.handle({
         characterId: "character-01",

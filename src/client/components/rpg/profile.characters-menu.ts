@@ -19,6 +19,7 @@ export default makeComponent({
       userUsername: interaction.user.username,
       userDiscordId: interaction.user.id,
       userGuildDiscordId: interaction.guild.id,
+      characterId: interaction.values[0],
     });
 
     interaction.update(response as InteractionUpdateOptions);

@@ -9,7 +9,7 @@ interface CharacterInspectItemUseCaseRequest {
 }
 
 interface CharacterInspectItemUseCaseResponse {
-  item: Item;
+  item: Item | null;
 }
 
 export class CharacterInspectItemUseCase {
@@ -31,8 +31,6 @@ export class CharacterInspectItemUseCase {
       itemId,
       characterId
     );
-    if (!item) throw new ResourceNotFoundError("item");
-
     return { item };
   }
 }
