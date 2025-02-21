@@ -1,4 +1,3 @@
-import type { Character } from "@prisma/client";
 import {
   ActionRowBuilder,
   ModalBuilder,
@@ -6,10 +5,10 @@ import {
   TextInputStyle,
 } from "discord.js";
 
-export function createUpCharacterModal(userId: string, character: Character) {
+export function createUsePointsModal(userId: string) {
   const modal = new ModalBuilder()
-    .setCustomId(`up-character/:${userId}/:${character.id}`)
-    .setTitle(`Distribuir Pontos de Atributo | ${character.name}`);
+    .setCustomId(`up-character/:${userId}`)
+    .setTitle(`Distribuir Pontos de Atributo`);
 
   const strengthInput = new TextInputBuilder()
     .setCustomId(`strength`)

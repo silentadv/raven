@@ -1,21 +1,19 @@
 import { ComponentType } from "@/@types/component";
-import { createUpCharacterModal } from "@/lib/components/up-character-modal";
+import { createUsePointsModal } from "@/lib/components/use-points-modal";
 import { icons } from "@/lib/emojis";
 import { makeComponent } from "@/lib/factories/make-component";
 import { joinText } from "@/lib/utils/join-text";
-import { PrismaCharactersRepository } from "@/repositories/prisma/prisma-characters-repository";
 import { InvalidAttributePointsAllocation } from "@/use-cases/errors/InvalidAttributePointsAllocation";
-import { makeAllocateCharacterAttributePointsUseCase } from "@/use-cases/factories/make-allocate-character-attribute-points-use-case";
+import { makeAllocateAttributePointsUseCase } from "@/use-cases/factories/make-allocate-attribute-points-use-case";
 import { MessageFlags } from "discord.js";
 import { z } from "zod";
 
 export default makeComponent({
-  id: "up-character/:userId/:characterId",
+  id: "up-character/:userId",
   name: "up-character",
   types: [ComponentType.Button, ComponentType.Modal],
   schema: z.object({
     userId: z.coerce.string(),
-    characterId: z.coerce.string(),
   }),
   async execute({ interaction, args }) {
     if (interaction.isModalSubmit()) {
@@ -54,11 +52,10 @@ export default makeComponent({
         )
           throw new Error();
 
-        const allocateCharacterAttributePoints =
-          makeAllocateCharacterAttributePointsUseCase();
+        const allocateAttributePointsUseCase =
+          makeAllocateAttributePointsUseCase();
 
-        await allocateCharacterAttributePoints.handle({
-          userCharacterId: args.characterId,
+        await allocateAttributePointsUseCase.handle({
           userDiscordId: args.userId,
           ...pointsDistribution,
         });
@@ -92,12 +89,7 @@ export default makeComponent({
     }
 
     if (interaction.isButton()) {
-      const charactersRepository = new PrismaCharactersRepository();
-      const character = (await charactersRepository.findById(
-        args.characterId
-      ))!;
-
-      const modal = createUpCharacterModal(interaction.user.id, character);
+      const modal = createUsePointsModal(interaction.user.id);
       return interaction.showModal(modal);
     }
   },

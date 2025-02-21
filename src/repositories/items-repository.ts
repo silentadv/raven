@@ -1,9 +1,9 @@
 import { Item, Prisma } from "@prisma/client";
 
 export interface ItemsRepository {
-  findByItemIdAndCharacterId(
+  findByItemAndUserId(
     itemId: string,
-    characterId: string
+    userDiscordId: string
   ): Promise<Item | null>;
   save(item: Item): Promise<Item>;
   create(item: Prisma.ItemUncheckedCreateInput): Promise<Item>;

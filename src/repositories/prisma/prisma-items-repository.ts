@@ -3,11 +3,11 @@ import { ItemsRepository } from "../items-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaItemsRepository implements ItemsRepository {
-  public async findByItemIdAndCharacterId(itemId: string, characterId: string) {
+  public async findByItemAndUserId(itemId: string, userId: string) {
     const item = await prisma.item.findFirst({
       where: {
         item_id: itemId,
-        character_id: characterId,
+        user_id: userId,
       },
     });
 

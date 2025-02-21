@@ -1,11 +1,9 @@
 import { icons } from "@/lib/emojis";
 import { makeCommand } from "@/lib/factories/make-command";
 import { joinText } from "@/lib/utils/join-text";
-import { PrismaGuildsRepository } from "@/repositories/prisma/prisma-guilds-repository";
 import { makeApplyCooldownUseCase } from "@/use-cases/factories/make-apply-cooldown-use-case";
-import { makeCharacterObtainItemUseCase } from "@/use-cases/factories/make-character-obtain-item-use-case";
-import { makeFetchUserCharactersUseCase } from "@/use-cases/factories/make-fetch-user-characters-use-case";
 import { makeGetCooldownUseCase } from "@/use-cases/factories/make-get-cooldown-use-case";
+import { makeObtainItemUseCase } from "@/use-cases/factories/make-obtain-item-use-case";
 import { CooldownType } from "@prisma/client";
 import dayjs from "dayjs";
 
@@ -23,26 +21,11 @@ export default makeCommand({
     });
 
     if (!cooldown || cooldown.date.getTime() <= Date.now()) {
-      const fetchUserCharactersUseCase = makeFetchUserCharactersUseCase();
-      const { characters } = await fetchUserCharactersUseCase.handle({
-        userDiscordId: message.author.id,
-      });
-
-      const guildsRepository = new PrismaGuildsRepository();
-      const currentGuild = await guildsRepository.findByDiscordId(
-        message.guild.id
-      );
-
-      const userCurrentMainCharacter =
-        characters.find(
-          (character) => character.guild_id === currentGuild?.id
-        ) || characters.at(0)!;
-
-      const characterObtainItemUseCase = makeCharacterObtainItemUseCase();
+      const obtainItemUseCase = makeObtainItemUseCase();
       const amountOfPrismasInReward = Math.floor(Math.random() * 500 + 100);
 
-      await characterObtainItemUseCase.handle({
-        characterId: userCurrentMainCharacter.id,
+      await obtainItemUseCase.handle({
+        userDiscordId: message.author.id,
         itemCount: amountOfPrismasInReward,
         itemId: "prisma",
       });

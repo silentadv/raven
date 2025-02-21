@@ -43,19 +43,8 @@ export default makeEvent({
         if (error instanceof ResourceNotFoundError && error.resource === "user")
           return message.reply(
             joinText(
-              `> ${icons.static.danger} | ${message.author}, **não** encontrei seu **registro** em meu **banco de dados**.`,
-              `> -# Utilize **${BOT_PREFIX}register** para se **registrar** em meu **banco de dados**.`
-            )
-          );
-
-        if (
-          error instanceof ResourceNotFoundError &&
-          error.resource === "character"
-        )
-          return message.reply(
-            joinText(
               `> ${icons.static.danger} | ${message.author}, **não** encontrei um **personagem** seu em meu **banco de dados**.`,
-              `> -# Utilize **${BOT_PREFIX}start** para **criar** um **personagem**.`
+              `> -# Utilize **${BOT_PREFIX}start** para **criar** seu **personagem**.`
             )
           );
 
@@ -63,7 +52,7 @@ export default makeEvent({
           return message.reply(
             joinText(
               `> ${icons.static.danger} | ${message.author}, ocorreu um erro ao executar este comando:`,
-              `> -# Erro: ${error.message}`
+              `> -# Erro: ${error.message.slice(0, 100)}...`
             )
           );
       }

@@ -5,9 +5,9 @@ import { randomUUID } from "crypto";
 export class InMemoryItemsRepository implements ItemsRepository {
   public items: Item[] = [];
 
-  public async findByItemIdAndCharacterId(itemId: string, characterId: string) {
+  public async findByItemAndUserId(itemId: string, userId: string) {
     const item = this.items.find(
-      (item) => item.item_id === itemId && item.character_id === characterId
+      (item) => item.item_id === itemId && item.user_id === userId
     );
     return item || null;
   }
@@ -21,7 +21,7 @@ export class InMemoryItemsRepository implements ItemsRepository {
   public async create(item: Prisma.ItemUncheckedCreateInput) {
     const it = {
       id: item.id ?? randomUUID(),
-      character_id: item.character_id,
+      user_id: item.user_id,
       count: item.count ?? 0,
       item_id: item.item_id,
     } satisfies Item;

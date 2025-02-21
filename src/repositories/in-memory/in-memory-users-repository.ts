@@ -6,8 +6,14 @@ export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = [];
 
   public async findByDiscordId(id: string) {
-    const user = this.items.find((item) => item.discord_id == id);
+    const user = this.items.find((item) => item.discord_id === id);
     return user || null;
+  }
+
+  public async save(user: User) {
+    const userIndex = this.items.findIndex((u) => u.id === user.id);
+    if (userIndex >= 0) this.items[userIndex] = user;
+    return user;
   }
 
   public async create(data: Prisma.UserCreateInput) {
@@ -15,6 +21,15 @@ export class InMemoryUsersRepository implements UsersRepository {
       id: data.id ?? randomUUID(),
       discord_id: data.discord_id,
       created_at: new Date(),
+      hp: data.hp ?? 100,
+      level: data.level ?? 1,
+      xp: data.xp ?? 0,
+      xp_cap: data.xp_cap ?? 1000,
+      agility: data.agility ?? 1,
+      magic: data.magic ?? 1,
+      resistance: data.resistance ?? 1,
+      strength: data.strength ?? 1,
+      points: data.points ?? 10,
     } satisfies User;
 
     this.items.push(user);

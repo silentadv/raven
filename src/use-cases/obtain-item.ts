@@ -1,37 +1,35 @@
-import { CharactersRepository } from "@/repositories/characters-repository";
+import { UsersRepository } from "@/repositories/users-repository";
 import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 import { ItemsRepository } from "@/repositories/items-repository";
 import { Item } from "@prisma/client";
 
-interface CharacterObtainItemUseCaseRequest {
-  characterId: string;
+interface ObtainItemUseCaseRequest {
+  userDiscordId: string;
   itemCount: number;
   itemId: string;
 }
 
-interface CharacterObtainItemUseCaseResponse {
+interface ObtainItemUseCaseResponse {
   item: Item;
 }
 
-export class CharacterObtainItemUseCase {
+export class ObtainItemUseCase {
   public constructor(
-    private charactersRepository: CharactersRepository,
+    private usersRepository: UsersRepository,
     private itemsRepository: ItemsRepository
   ) {}
 
   public async handle({
-    characterId,
+    userDiscordId,
     itemCount,
     itemId,
-  }: CharacterObtainItemUseCaseRequest): Promise<CharacterObtainItemUseCaseResponse> {
-    const existsCharacter = await this.charactersRepository.findById(
-      characterId
-    );
-    if (!existsCharacter) throw new ResourceNotFoundError("character");
+  }: ObtainItemUseCaseRequest): Promise<ObtainItemUseCaseResponse> {
+    const user = await this.usersRepository.findByDiscordId(userDiscordId);
+    if (!user) throw new ResourceNotFoundError("user");
 
-    const existsItem = await this.itemsRepository.findByItemIdAndCharacterId(
+    const existsItem = await this.itemsRepository.findByItemAndUserId(
       itemId,
-      characterId
+      user.id
     );
     if (existsItem) {
       existsItem.count += itemCount;
@@ -41,7 +39,7 @@ export class CharacterObtainItemUseCase {
 
     const createdItem = await this.itemsRepository.create({
       item_id: itemId,
-      character_id: characterId,
+      user_id: user.id,
       count: itemCount,
     });
 

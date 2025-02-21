@@ -11,24 +11,10 @@ model User {
   id         String @id @default(cuid())
   discord_id String @unique
 
-  characters Character[]
-
-  created_at DateTime   @default(now())
-  cooldowns  Cooldown[]
-
-  @@map("users")
-}
-
-model Character {
-  id       String @id @default(cuid())
-  user_id  String
-  guild_id String
-
-  name   String @db.VarChar(25)
-  level  Int    @default(1)
-  xp     Int    @default(0)
-  xp_cap Int    @default(1000)
-  points Int    @default(10)
+  level  Int @default(1)
+  xp     Int @default(0)
+  xp_cap Int @default(1000)
+  points Int @default(10)
 
   hp         Int @default(100)
   strength   Int @default(1)
@@ -38,34 +24,21 @@ model Character {
 
   created_at DateTime @default(now())
 
-  user  User   @relation(fields: [user_id], references: [id])
-  Guild Guild  @relation(fields: [guild_id], references: [id])
-  Item  Item[]
+  items     Item[]
+  cooldowns Cooldown[]
 
-  @@unique([user_id, guild_id])
-  @@map("characters")
-}
-
-model Guild {
-  id         String @id @default(cuid())
-  discord_id String @unique
-  name       String
-
-  characters Character[]
-
-  created_at DateTime @default(now())
-
-  @@map("guilds")
+  @@map("users")
 }
 
 model Item {
-  id           String @id @default(cuid())
-  item_id      String
-  character_id String
-  count        Int    @default(0)
+  id      String @id @default(cuid())
+  item_id String
+  user_id String
+  count   Int    @default(0)
 
-  Character Character @relation(fields: [character_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
 
+  @@unique([user_id, item_id])
   @@map("items")
 }
 
