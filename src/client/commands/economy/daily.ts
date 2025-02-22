@@ -16,7 +16,7 @@ export default makeCommand({
     const applyCooldownUseCase = makeApplyCooldownUseCase();
 
     const { cooldown } = await getCooldownUseCase.handle({
-      cooldownType: CooldownType.DAILY,
+      cooldownType: CooldownType.Daily,
       userDiscordId: message.author.id,
     });
 
@@ -34,7 +34,7 @@ export default makeCommand({
 
       await applyCooldownUseCase.handle({
         cooldownDate,
-        cooldownType: CooldownType.DAILY,
+        cooldownType: CooldownType.Daily,
         userDiscordId: message.author.id,
       });
 

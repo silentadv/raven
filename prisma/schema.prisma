@@ -16,44 +16,67 @@ model User {
   xp_cap Int @default(1000)
   points Int @default(10)
 
-  hp         Int @default(100)
-  strength   Int @default(1)
-  agility    Int @default(1)
-  magic      Int @default(1)
-  resistance Int @default(1)
-
+  hp         Int      @default(100)
+  strength   Int      @default(1)
+  agility    Int      @default(1)
+  magic      Int      @default(1)
+  resistance Int      @default(1)
   created_at DateTime @default(now())
 
-  items     Item[]
-  cooldowns Cooldown[]
+  items      Item[]
+  cooldowns  Cooldown[]
+  equipments Equipment[]
 
   @@map("users")
 }
 
 model Item {
-  id      String @id @default(cuid())
+  id      Int    @id @default(autoincrement())
   item_id String
-  user_id String
+  user_id String @unique
   count   Int    @default(0)
 
-  user User @relation(fields: [user_id], references: [id])
+  user      User        @relation(fields: [user_id], references: [id])
+  Equipment Equipment[]
 
   @@unique([user_id, item_id])
   @@map("items")
 }
 
 enum CooldownType {
-  DAILY
+  Daily
 }
 
 model Cooldown {
-  id      String       @id @default(cuid())
+  id      Int      @id @default(autoincrement())
   user_id String
-  type    CooldownType
   date    DateTime
 
-  user User @relation(fields: [user_id], references: [id])
+  type CooldownType
+  user User         @relation(fields: [user_id], references: [id])
 
   @@unique([type, user_id])
   @@map("cooldowns")
+}
+
+enum EquipmentSlotType {
+  Head
+  Body
+  LeftHand
+  RightHand
+  Foot
+}
+
+model Equipment {
+  id      Int    @id @default(autoincrement())
+  item_id Int
+  user_id String
+
+  slot EquipmentSlotType
+
+  user User @relation(fields: [user_id], references: [id])
+  item Item @relation(fields: [item_id], references: [id])
+
+  @@unique([user_id, slot])
+  @@map("equipments")
 }

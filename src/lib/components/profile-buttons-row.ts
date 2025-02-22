@@ -13,6 +13,7 @@ export function createProfileButtonsRow(user: User) {
   const reloadProfileButton = new ButtonBuilder()
     .setCustomId(`reload-profile/:${user.discord_id}`)
     .setEmoji(icons.static.reload.id)
+    .setLabel("| Recarregar Perfil")
     .setStyle(ButtonStyle.Primary);
 
   const actionsRow = new ActionRowBuilder<ButtonBuilder>().setComponents(

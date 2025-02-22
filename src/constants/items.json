@@ -5,9 +5,9 @@
       "name": "Espada de Madeira",
       "rarity": "comum"
     },
-    "stone_sword": {
-      "id": "stone_sword",
-      "name": "Espada de Pedra",
+    "wooden_staff": {
+      "id": "wooden_staff",
+      "name": "Cajado de Madeira",
       "rarity": "comum"
     }
   },
