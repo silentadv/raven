@@ -9,10 +9,16 @@ export interface MainShopControllerRequest {
 
 export class MainShopController {
   public async handle({ userDiscordId }: MainShopControllerRequest) {
-    const fields = makeFieldList({
-      name: "Loja de Pesca",
-      value: "> Navegue pela loja de pesca.",
-    });
+    const fields = makeFieldList(
+      {
+        name: "Pagina Inicial",
+        value: "> Contém informações sobre as lojas disponíveis.",
+      },
+      {
+        name: "Loja de Pesca",
+        value: "> Navegue pela loja de pesca.",
+      }
+    );
 
     const embed = new EmbedBuilder()
       .setColor(Colors.DarkRed)
