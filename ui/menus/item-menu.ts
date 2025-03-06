@@ -12,7 +12,7 @@ export interface BaseItem {
   name: string;
 }
 
-export function itemMenu(id: string, items: BaseItem[], max = 1, min = 1) {
+export function makeItemMenu(id: string, items: BaseItem[], max = 1, min = 1) {
   const emojis = items.map(
     (item) => icons.static[item.id as keyof (typeof icons)["static"]]
   );
