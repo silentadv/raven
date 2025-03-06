@@ -1,0 +1,26 @@
+{
+  "basic_rod": {
+    "id": "basic_rod",
+    "name": "Vara Simples",
+    "category": "fishing",
+    "ravits_price": 200
+  },
+  "fisherman_rod": {
+    "id": "fisherman_rod",
+    "name": "Vara do Pescador",
+    "category": "fishing",
+    "ravits_price": 2000
+  },
+  "worm_bait": {
+    "id": "worm_bait",
+    "name": "Isca de Minhoca",
+    "category": "fishing",
+    "ravits_price": 10
+  },
+  "shiny_bait": {
+    "id": "shiny_bait",
+    "name": "Isca Brilhante",
+    "category": "fishing",
+    "ravits_price": 100
+  }
+}

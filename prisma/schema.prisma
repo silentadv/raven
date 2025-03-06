@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String @id @default(cuid())
+  discord_id String @unique
+
+  level Int @default(1)
+  xp    Int @default(0)
+
+  created_at DateTime @default(now())
+
+  items     Item[]
+  cooldowns Cooldown[]
+
+  @@map("users")
+}
+
+enum ItemType {
+  Currency
+  Tool
+  Drop
+}
+
+model Item {
+  id      Int      @id @default(autoincrement())
+  item_id String
+  user_id String
+  count   Int      @default(0)
+  type    ItemType
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, item_id])
+  @@map("items")
+}
+
+enum CooldownType {
+  Daily
+}
+
+model Cooldown {
+  id      Int      @id @default(autoincrement())
+  user_id String
+  date    DateTime
+
+  type CooldownType
+  user User         @relation(fields: [user_id], references: [id])
+
+  @@unique([type, user_id])
+  @@map("cooldowns")
+}

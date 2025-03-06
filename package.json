@@ -1,0 +1,33 @@
+{
+  "name": "raven",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx --env-file=.env --watch src/client/index.ts",
+    "start": "node build/client/index.js",
+    "build": "tsup src --out-dir build",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "prisma": "^6.4.0",
+    "tsup": "^8.3.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.0",
+    "dayjs": "^1.11.13",
+    "discord.js": "^14.18.0",
+    "tiny-glob": "^0.2.9",
+    "zod": "^3.24.2"
+  }
+}
