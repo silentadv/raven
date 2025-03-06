@@ -7,6 +7,5 @@ declare module "discord.js" {
   export interface Client {
     commands: Collection<string, CommandOptions>;
     components: Collection<string, ComponentOptions<any, any, any>>;
-    fishingSessions: Collection<string, FishingSession>;
   }
 }

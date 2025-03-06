@@ -31,10 +31,7 @@ export default makeComponent({
           userDiscordId: args.userId,
         });
 
-        return interaction.reply({
-          ...fishingResponse,
-          flags: [MessageFlags.Ephemeral],
-        });
+        return interaction.reply(fishingResponse);
     }
   },
 });

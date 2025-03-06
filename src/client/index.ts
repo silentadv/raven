@@ -16,7 +16,6 @@ const client = new Client({
 
 client.commands = new Collection();
 client.components = new Collection();
-client.fishingSessions = new Collection();
 
 handleEvents(client);
 handleCommands(client);

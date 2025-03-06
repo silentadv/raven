@@ -1,7 +1,11 @@
-export interface FishingSession {
-  messageId: string;
-  userId: string;
+export interface FishingData {
+  userDiscordId: string;
+  tools: FishingTools;
   fishCount: number;
-  startedAt: Date;
-  fishAppearedAt: Date;
+  fishSpawnedAt?: Date;
+}
+
+export interface FishingTools {
+  rod: string;
+  bait: string;
 }

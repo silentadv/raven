@@ -29,10 +29,19 @@ export class FishingShopController {
     const itemsMenu = makeListMenu(
       `buy-item/:${userDiscordId}/:fishing`,
       itemRawOptions
+    ).setPlaceholder("Clique aqui para comprar um item.");
+
+    const itemsRow = new ActionRowBuilder<typeof itemsMenu>().setComponents(
+      itemsMenu
     );
 
-    const row = new ActionRowBuilder<typeof itemsMenu>().setComponents(
-      itemsMenu
+    const mainMenu = makeListMenu(`shop-menu/:${userDiscordId}`, [
+      { label: "Pagina Inicial", value: "main" },
+      { label: "Loja de Pesca", value: "fishing", default: true },
+    ]);
+
+    const mainRow = new ActionRowBuilder<typeof mainMenu>().setComponents(
+      mainMenu
     );
 
     const embed = new EmbedBuilder()
@@ -43,6 +52,6 @@ export class FishingShopController {
       )
       .setFields(itemFields);
 
-    return { embeds: [embed], components: [row] };
+    return { embeds: [embed], components: [mainRow, itemsRow] };
   }
 }
