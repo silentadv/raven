@@ -1,5 +1,5 @@
-import { FishingShopController } from "@/controllers/economy/fishing-shop-controller";
-import { MainShopController } from "@/controllers/economy/main-shop-controller";
+import { FishingShopController } from "@/controllers/shop/fishing-shop-controller";
+import { MainShopController } from "@/controllers/shop/main-shop-controller";
 import { makeComponent } from "@/lib/factories/make-component";
 import { ComponentType } from "@/types/component";
 import { MessageFlags } from "discord.js";
@@ -13,9 +13,11 @@ export default makeComponent({
   schema: z.object({
     userId: z.string(),
   }),
-  types: [ComponentType.StringSelectMenu],
+  types: [ComponentType.StringSelectMenu, ComponentType.Button],
   async execute({ interaction, args }) {
-    const type = interaction.values[0] as ShopType;
+    const type = interaction.isButton()
+      ? "main"
+      : (interaction.values[0] as ShopType);
 
     switch (type) {
       case "main":
@@ -31,7 +33,7 @@ export default makeComponent({
           userDiscordId: args.userId,
         });
 
-        return interaction.reply(fishingResponse);
+        return interaction.update(fishingResponse);
     }
   },
 });

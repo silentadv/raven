@@ -2,7 +2,13 @@ import { tools } from "@/constants";
 import { icons } from "@/lib/emojis";
 import { ListMenuField, makeListMenu } from "@raven-ui/menus/list-menu";
 import { ListField, makeFieldList } from "@raven-ui/string/list";
-import { ActionRowBuilder, Colors, EmbedBuilder } from "discord.js";
+import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  Colors,
+  EmbedBuilder,
+} from "discord.js";
 
 export interface FishingShopControllerRequest {
   userDiscordId: string;
@@ -35,23 +41,27 @@ export class FishingShopController {
       itemsMenu
     );
 
-    const mainMenu = makeListMenu(`shop-menu/:${userDiscordId}`, [
-      { label: "Pagina Inicial", value: "main" },
-      { label: "Loja de Pesca", value: "fishing", default: true },
-    ]);
+    const backButton = new ButtonBuilder()
+      .setCustomId(`shop-menu/:${userDiscordId}`)
+      .setEmoji(icons.static.danger.id)
+      .setLabel("Sair da Loja")
+      .setStyle(ButtonStyle.Secondary);
 
-    const mainRow = new ActionRowBuilder<typeof mainMenu>().setComponents(
-      mainMenu
-    );
+    const backButtonRow = new ActionRowBuilder<
+      typeof backButton
+    >().setComponents(backButton);
 
     const embed = new EmbedBuilder()
       .setColor(Colors.DarkRed)
-      .setTitle("Mercado Raven | Loja de Pesca")
+      .setAuthor({ name: "Selecione um item para comprar" })
+      .setThumbnail(
+        "https://cdn.discordapp.com/attachments/1347628969079341097/1347630039843213332/basic_rod.png?ex=67cc85c7&is=67cb3447&hm=5a5807b8609d0f6c45713a876a746835298e0cf3038b5fc2742b7cb52c3457f5&"
+      )
       .setDescription(
         `> ${icons.static.info} | <@${userDiscordId}>, **veja** logo **abaixo** a **lista** de **itens disponíveis** na **loja**, caso deseje **comprar** algum **basta** o **selecionar**.`
       )
       .setFields(itemFields);
 
-    return { embeds: [embed], components: [mainRow, itemsRow] };
+    return { embeds: [embed], components: [itemsRow, backButtonRow] };
   }
 }

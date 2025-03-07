@@ -1,4 +1,4 @@
-import { MainShopController } from "@/controllers/economy/main-shop-controller";
+import { MainShopController } from "@/controllers/shop/main-shop-controller";
 import { makeCommand } from "@/lib/factories/make-command";
 
 export default makeCommand({

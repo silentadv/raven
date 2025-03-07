@@ -11,18 +11,21 @@ export class MainShopController {
   public async handle({ userDiscordId }: MainShopControllerRequest) {
     const fields = makeFieldList(
       {
-        name: "Pagina Inicial",
+        name: `${icons.static.market_cart} Pagina Inicial`,
         value: "> Contém informações sobre as lojas disponíveis.",
       },
       {
-        name: "Loja de Pesca",
+        name: `${icons.static.basic_rod} Loja de Pesca`,
         value: "> Navegue pela loja de pesca.",
       }
     );
 
     const embed = new EmbedBuilder()
       .setColor(Colors.DarkRed)
-      .setTitle("Mercado Raven | Página Inicial")
+      .setAuthor({ name: "Selecione a loja que você deseja navegar." })
+      .setThumbnail(
+        "https://cdn.discordapp.com/attachments/1347628969079341097/1347628999236522025/market_cart.png?ex=67cc84cf&is=67cb334f&hm=17edcb390118eada71ff39d0ee8df985e6689d40f59d2f27b44bd4fefd9838ad&"
+      )
       .setDescription(
         `> ${icons.static.info} | <@${userDiscordId}>, **selecione** uma **loja** para **ver** seus **itens disponíveis**.`
       )
