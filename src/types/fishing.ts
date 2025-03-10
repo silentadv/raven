@@ -3,7 +3,6 @@ import { ItemId } from "@/constants";
 export interface FishingData {
   userDiscordId: string;
   tools: FishingTools;
-  fishCount: number;
   fishSpawnedAt?: Date;
   drops?: FishingDrop[];
 }

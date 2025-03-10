@@ -12,7 +12,7 @@ let itemsRepository: InMemoryItemsRepository;
 let fishingRepository: InMemoryFishingRepository;
 let sut: StartFishingUseCase;
 
-describe("Apply Cooldown Use Case", () => {
+describe("Start Fishing Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     itemsRepository = new InMemoryItemsRepository();
@@ -49,7 +49,6 @@ describe("Apply Cooldown Use Case", () => {
     });
 
     expect(fishing.userDiscordId).toEqual("user-01");
-    expect(fishing.fishCount).toEqual(0);
   });
 
   it("should not be able to start fishing if user already is fishing.", async () => {

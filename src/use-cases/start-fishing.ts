@@ -8,8 +8,8 @@ import { ItemId } from "@/constants";
 
 export interface StartFishingUseCaseRequest {
   userDiscordId: string;
-  rod: ItemId;
-  bait: ItemId;
+  rod: string;
+  bait: string;
 }
 
 export interface StartFishingUseCaseResponse {
@@ -49,7 +49,7 @@ export class StartFishingUseCase {
 
     const fishing = await this.fishingRepository.create({
       userDiscordId,
-      tools: { rod, bait },
+      tools: { rod: rod as ItemId, bait: bait as ItemId },
     });
 
     return { fishing };

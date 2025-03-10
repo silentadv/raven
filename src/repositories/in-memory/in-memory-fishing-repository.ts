@@ -11,15 +11,23 @@ export class InMemoryFishingRepository implements FishingRepository {
     return fishing || null;
   }
 
-  public async create(data: Omit<FishingData, "fishCount">) {
+  public async create(data: FishingData) {
     const fishing = {
       userDiscordId: data.userDiscordId,
       tools: data.tools,
-      fishCount: 0,
       fishSpawnedAt: data.fishSpawnedAt,
     } satisfies FishingData;
     this.items.push(fishing);
 
     return fishing;
+  }
+
+  public async save(data: FishingData) {
+    const index = this.items.findIndex(
+      (it) => it.userDiscordId === data.userDiscordId
+    );
+    if (index >= 0) this.items[index] = data;
+
+    return data;
   }
 }
