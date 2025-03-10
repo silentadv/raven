@@ -5,6 +5,7 @@ import { StartFishingUseCase } from "./start-fishing";
 import { InMemoryFishingRepository } from "@/repositories/in-memory/in-memory-fishing-repository";
 import { InMemoryItemsRepository } from "@/repositories/in-memory/in-memory-items-repository";
 import { ItemType } from "@prisma/client";
+import { FishingSessionAlreadyExistsError } from "./errors/FishingSessionAlreadyExistsError";
 
 let usersRepository: InMemoryUsersRepository;
 let itemsRepository: InMemoryItemsRepository;
@@ -81,7 +82,7 @@ describe("Apply Cooldown Use Case", () => {
         bait: "bait-01",
         rod: "rod-01",
       })
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(FishingSessionAlreadyExistsError);
   });
 
   it("should not be able to start fishing with invalid tools.", async () => {

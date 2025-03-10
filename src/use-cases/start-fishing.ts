@@ -3,11 +3,13 @@ import { UsersRepository } from "@/repositories/users-repository";
 import { ResourceNotFoundError } from "./errors/ResourceNotFoundError";
 import { FishingData } from "@/types/fishing";
 import { ItemsRepository } from "@/repositories/items-repository";
+import { FishingSessionAlreadyExistsError } from "./errors/FishingSessionAlreadyExistsError";
+import { ItemId } from "@/constants";
 
 export interface StartFishingUseCaseRequest {
   userDiscordId: string;
-  rod: string;
-  bait: string;
+  rod: ItemId;
+  bait: ItemId;
 }
 
 export interface StartFishingUseCaseResponse {
@@ -32,7 +34,7 @@ export class StartFishingUseCase {
     const userAlreadyIsFishing = await this.fishingRepository.findByDiscordId(
       userDiscordId
     );
-    if (userAlreadyIsFishing) throw new Error("User already is fishing.");
+    if (userAlreadyIsFishing) throw new FishingSessionAlreadyExistsError();
 
     const isValidRod = await this.itemsRepository.findByItemAndUserId(
       rod,

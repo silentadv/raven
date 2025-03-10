@@ -8,7 +8,6 @@ import {
 
 export interface BaseItem {
   id: ItemId;
-  category: ItemType;
   name: string;
 }
 
@@ -23,7 +22,7 @@ export function makeItemMenu(id: string, items: BaseItem[], max = 1, min = 1) {
       .setEmoji(emoji.id)
       .setLabel(item.name)
       .setDescription("Clique aqui para selecionar este item")
-      .setValue(`${item.category}:${item.id}`);
+      .setValue(`${item.id}`);
   });
 
   const menu = new StringSelectMenuBuilder()

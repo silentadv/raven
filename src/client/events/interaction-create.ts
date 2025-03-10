@@ -20,7 +20,7 @@ export default makeEvent({
     const component = client.components.get(name);
     if (!component)
       return interaction.reply({
-        content: `> ${icons.static.danger} | ${interaction.user}, **ocorreu um erro** nesta **interação** tente novamente **mais tarde**.`,
+        content: `> ${icons.static.danger} | ${interaction.user} **ocorreu um erro**, nesta **interação** tente novamente **mais tarde**.`,
         flags: ["Ephemeral"],
       });
 
@@ -33,7 +33,7 @@ export default makeEvent({
 
     if (args.data?.userId && interaction.user.id !== args.data.userId)
       return interaction.reply({
-        content: `> ${icons.static.danger} | ${interaction.user}, **ocorreu um erro** esta **interação** não é pra **você**.`,
+        content: `> ${icons.static.danger} | ${interaction.user} **ocorreu um erro**, esta **interação** não é pra **você**.`,
         flags: ["Ephemeral"],
       });
 

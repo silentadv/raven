@@ -29,6 +29,9 @@ export default makeEvent({
       client.commands.find((command) => command.aliases?.includes(commandName));
 
     if (command) {
+      if (command.category === "dev" && message.author.id !== env.DEVELOPER_ID)
+        return;
+
       try {
         let parsedArgs = args;
 
